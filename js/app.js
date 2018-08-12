@@ -154,7 +154,6 @@
                endGame();
            }
            timing.innerHTML=time;
-               console.log(time);
            }, 1200);
        }
       // Clear the Interval of the timer
