@@ -253,9 +253,10 @@
        var stats = document.querySelector('.stats');
    
        function toggleModal() {
+        clearTimeOut();
            modal.classList.toggle("show-modal");
            stats.textContent=`With ${move} and${starCount} Stars. In ${time} Seconds `
-           clearTimeOut();
+           
        }
    
        function windowOnClick(event) {
