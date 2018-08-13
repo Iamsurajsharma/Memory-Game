@@ -82,8 +82,7 @@
                isPlaying=false;
                SecondCard=this; 
                checkForMatch();
-
-
+             
             };
        
 
@@ -100,9 +99,11 @@
            FirstCard.classList.add('match')
            SecondCard.classList.add('match')
            score++;
-           
+         
            resetBoard();
-           
+           if(score===8){
+            endGame();
+        }  
        }
        // UnFlips the UnMatched Cards
        function unflipCards(){
@@ -149,21 +150,19 @@
        function timer(){
            interval= setInterval(() => {
                time+=1;
-               
-           if(score===8){
-               endGame();
-           }
            timing.innerHTML=time;
-           }, 1200);
+           }, 1000);
        }
       // Clear the Interval of the timer
        function clearTimeOut(){
            clearInterval(interval)
+           
+           timing.innerHTML=0;
        }
 
-       restart.addEventListener('click',restartFunction);
+       restart.addEventListener('click',restartButtonFunction);
        // Restart the button Function
-       function restartFunction(e){
+       function restartFunction(){
            
            
                time=0;
@@ -174,15 +173,23 @@
                deck.innerHTML='';
                stars.innerHTML='';
                init();
-               
+               clearInterval(interval)
+           
                moves.innerHTML=0;
+               
                clearTimeOut();
-               if(e.target===restartModal){
-                   
-               toggleModal();
-       
-               }
+               
        }
+       //restartButton Function
+       function restartButtonFunction(e){
+        if(e.target===restartModal){
+                   
+            toggleModal();
+  
+          }
+          restartFunction();
+       }
+
        //Initializing the Stars
 
        function initStars(){
@@ -202,15 +209,16 @@
        function reduceStar(){
            
        let star = document.querySelectorAll('.fa-star');
-          
+          if(starCount<1){
           star[star.length -1].classList.remove('fa-star');
           star[star.length -1].classList.add('fa-star-o');
           starCount--;    
-                
+        }      
        }
        // Ending the game 
-       function endGame(){    
-       toggleModal() 
+       function endGame(){     
+       toggleModal() ;
+        
        }
 
 
@@ -253,10 +261,12 @@
        var stats = document.querySelector('.stats');
    
        function toggleModal() {
-        clearTimeOut();
+      //  clearTimeOut();
            modal.classList.toggle("show-modal");
            stats.textContent=`With ${move} and${starCount} Stars. In ${time} Seconds `
            
+           
+       restartFunction();  
        }
    
        function windowOnClick(event) {
@@ -266,7 +276,7 @@
            }
        }
        restartModal = document.getElementById('modal-restart');
-       restartModal.addEventListener('click',restartFunction);
+       restartModal.addEventListener('click',restartButtonFunction);
 
        closeButton.addEventListener("click", toggleModal);
        window.addEventListener("click", windowOnClick);
