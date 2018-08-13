@@ -23,16 +23,16 @@
        *   - loop through each card and create its HTML
        *   - add each card's HTML to the page
        */
-       let interval=0;
-       let increment=0;
-       let time =0;
-       let score =0;
-       let move=0;
-       let isPlaying=false;
-       let FirstCard;
-       let SecondCard;
-       let lockBoard= false;
-       let starCount=3;
+       let interval=0,
+           increment=0,
+           time =0,
+           score =0,
+           move=0,
+           isPlaying=false,
+           FirstCard,
+           SecondCard,
+           lockBoard= false
+           starCount=3;
 
 
        // make card 
@@ -76,13 +76,18 @@
            if(!isPlaying){
                isPlaying=true;
                FirstCard=this; 
-               timer();
+              
                return;      
            }
+           
+           if(time===0){
+            console.log('hell')
+            timer();
+        }
                isPlaying=false;
                SecondCard=this; 
                checkForMatch();
-             
+            
             };
        
 
@@ -136,15 +141,16 @@
        }
         // Increments the Move
        function incMoves(){
-           move+=1;
-           moves.innerHTML=move;
-           if (move > 15) {
+           if (move === 15) {
                reduceStar();
            }
        
-           if (move > 50) {
+           if (move === 30) {
                reduceStar();
            }
+           
+           move+=1;
+           moves.innerHTML=move;
        }
        // Timer which tells the seconds
        function timer(){
@@ -167,11 +173,13 @@
            
                time=0;
                move=0;
+               starCount=0;
    
                
                [isPlaying, lockBoard]=[false,false];
                deck.innerHTML='';
                stars.innerHTML='';
+               
                init();
                clearInterval(interval)
            
@@ -209,11 +217,11 @@
        function reduceStar(){
            
        let star = document.querySelectorAll('.fa-star');
-          if(starCount<1){
+          
           star[star.length -1].classList.remove('fa-star');
           star[star.length -1].classList.add('fa-star-o');
-          starCount--;    
-        }      
+             
+         starCount--;
        }
        // Ending the game 
        function endGame(){     
