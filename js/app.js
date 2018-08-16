@@ -271,7 +271,7 @@
        function toggleModal() {
       //  clearTimeOut();
            modal.classList.toggle("show-modal");
-           stats.textContent=`With ${move} and${starCount} Stars. In ${time} Seconds `
+           stats.textContent=`With ${move} Moves and ${starCount} Stars. In ${time} Seconds `
            
            
        restartFunction();  
